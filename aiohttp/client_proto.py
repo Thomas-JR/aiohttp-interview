@@ -289,7 +289,8 @@ class ResponseHandler(BaseProtocol, DataQueue[Tuple[RawResponseMessage, StreamRe
             set_exception(self._payload, exc)
 
     def data_received(self, data: bytes) -> None:
-        self._reschedule_timeout()
+        if data:
+            self._reschedule_timeout()
 
         if not data:
             return

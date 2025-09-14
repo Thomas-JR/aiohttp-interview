@@ -289,11 +289,6 @@ class ResponseHandler(BaseProtocol, DataQueue[Tuple[RawResponseMessage, StreamRe
             set_exception(self._payload, exc)
 
     def data_received(self, data: bytes) -> None:
-        self._reschedule_timeout()
-
-        if not data:
-            return
-
         # custom payload parser - currently always WebSocketReader
         if self._payload_parser is not None:
             eof, tail = self._payload_parser.feed_data(data)
